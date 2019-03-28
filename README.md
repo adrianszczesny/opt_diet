@@ -9,19 +9,19 @@ Wymagania funkcjonalne:
 
     2.Wybór ograniczeń żywieniowych​
 
-    -Nietolerancja laktozy​
+       -Nietolerancja laktozy​
 
-    -Wegetarianizm​
+       -Wegetarianizm​
 
-    -Uczulenie na gluten​
+       -Uczulenie na gluten​
 
     3.Wybór kryteriów cenowych wyszukiwania:​
 
-    -Najmniejsza cena​
+       -Najmniejsza cena​
 
-    -Cena z zakresu​
+       -Cena z zakresu​
 
-    -Maksymalna cena
+       -Maksymalna cena
     
     
     
