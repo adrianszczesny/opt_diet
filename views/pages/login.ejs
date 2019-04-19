@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<% include ../partials/head %>
+</head>
+<body>
+ <% include ../partials/header %>
+                   
+<div class="card loginCard" align="center">
+	<h1>Login</h1>
+<% if(typeof nextRoute != 'undefined') { %>
+	<form method="POST" action="/login/<%=nextRoute%>/<%=isbn%>">
+<% } else { %>
+	<form method="POST" action="/login">
+<% } %>
+		<input type="text" name="email" placeholder="Email" class="form-control">
+		<input type="password" name="password" placeholder="Haslo" class="form-control">
+		
+		<button class="btn btn-primary btn-md">Zaloguj</button>
+	</form>	
+<% include ../partials/error %>
+</div>
+<% include ../partials/footer %>
+<script type="text/javascript" src="/assets/javascript/error.js"></script>
+</body>
+</html>

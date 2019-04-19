@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<% include ../partials/head %>
+</head>
+<body>
+<% include ../partials/header %>
+
+<div class="card registerCard" align="center">
+	<h1>Rejestracja</h1>
+	<form method="POST" action="/register">
+		<input type="text" name="name" placeholder="Imie i Nazwisko" class="form-control">
+		<input type="text" name="email" placeholder="E-mail" class="form-control">
+		<input type="text" name="username" placeholder="Login" class="form-control">
+		<input type="password" name="password" placeholder="Has³o" class="form-control">
+		
+		<button class="btn btn-primary btn-md">Zarejestruj</button>
+	</form>
+<% include ../partials/error %>
+</div>
+<% include ../partials/footer %>
+</body>
+</html>
