@@ -38,8 +38,12 @@ router.use(express.static("../public"));
 router.get('/', function(req, res) {
 	addRouteInfo(req);
 	console.log(req.session.routerInfo);
-	res.render("pages/ui", {req: req.session.user_id});
+	res.render("pages/home", {req: req.session.user_id});
 });
+
+router.get('/ui', function (req, res) {
+    res.render('pages/ui', { req: req.session.user_id });
+})
 
 //logowania
 router.get('/loginPage', function(req,res) {
