@@ -34,11 +34,11 @@ var connection = mysql.createConnection({
 
 router.use(express.static("../public"));
 
- //odnoúniki 
+ //odno≈ìniki 
 router.get('/', function(req, res) {
 	addRouteInfo(req);
 	console.log(req.session.routerInfo);
-	res.render("pages/home", {req: req.session.user_id});
+	res.render("pages/ui", {req: req.session.user_id});
 });
 
 //logowania
