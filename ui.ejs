@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dieta </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    <meta name="description" content="Dieta">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <style>
+        .jumbotron {
+            background-color: #cacad7;
+            color: #272427;
+            width: 450px;
+            margin: auto;
+            margin-top: 15px;
+        }
+
+        .tab-content {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .nav-tabs {
+            margin-bottom: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #323233;
+            text-transform: uppercase;
+        }
+        .box1{
+            padding-left: 0px;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="jumbotron">
+
+            <h3 class="text-center">Kaloryczność</h3>
+
+            <div class="row">
+                <div class="text-center col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input type="number" min="0" class="form-control" id="min_k" name="min_k" placeholder="min" onchange="Next()" onkeypress="return isNumberKey(event)" disabled>
+                </div>
+                <div class="text-center col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input type="number" min="0" class="form-control" id="max_k" name="max_k" placeholder="max" onchange="Next()" onkeypress="return isNumberKey(event)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input type="checkbox" data-toggle="toggle" data-size="mini" name="min_kk" id="min_kk" data-on=" " data-off=" " onchange="Toggle_min_k(); Next()" />
+                </div>
+            </div>
+            <!--************************************************************************************************************-->
+            <h3 class="text-center">Ograniczenia żywieniowe</h3>
+            <div class="col-lg-12 box1">
+                <label><input type="checkbox" data-toggle="toggle" data-size="mini" name="laktoza" data-on=" " data-off=" " /> Nietolerancja laktozy</label>
+            </div>
+            <div class="col-lg-12 box1">
+                <label><input type="checkbox" data-toggle="toggle" data-size="mini" name="wegetarianizm" data-on=" " data-off=" " /> Wegetarianizm </label>
+            </div>
+            <div class="col-lg-12 box1">
+                <label><input type="checkbox" data-toggle="toggle" data-size="mini" name="bezglutenu" data-on=" " data-off=" " /> Dieta bezglutenowa</label>
+            </div>
+
+            <!--************************************************************************************************************-->
+            <h3 class="text-center">Cena</h3>
+            <label><input type="radio" data-toggle="toggle" name="cena1" id="cena1" onchange="Toggle_min_c(); Next()" /> Najmniejsza cena</label>
+
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <label><input type="radio" data-toggle="toggle" name="cena1" id="cena1" onchange="Toggle_max_c(); Next()" /> Maksymalna cena</label>
+                </div>
+                <div class="col-lg-3 box1">
+                    <input type="number" min="0" class="form-control" id="max_c" name="max_c" placeholder="zł" onchange="Next()" onkeypress="return isNumberKey(event)" disabled>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <label><input type="radio" data-toggle="toggle" name="cena1" id="cena1" onchange="Toggle_range_c(); Next()" /> Cena z przedziału: </label>
+                </div>
+                <div class="col-lg-3 box1">
+                    <input type="number" min="0" class="form-control" id="cena11" name="cena11" placeholder="zł" onchange="Next()" onkeypress="return isNumberKey(event)" disabled>
+                </div>
+                <div class="col-lg-3 box1">
+                    <input type="number" min="0" class="form-control" id="cena22" name="cena22" placeholder="zł" onchange="Next()" onkeypress="return isNumberKey(event)" disabled>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg center-block" id="dalej" disabled> Dalej </button>
+        </div>
+
+
+
+    </div>
+
+
+    <script>
+        var toggle = false;
+        var r1, r2, r3 = false;
+        function Toggle_min_k() {
+            if (toggle == false) {
+                $('#min_k').prop('disabled', false).change()
+                toggle = true;
+            }
+            else {
+                $('#min_k').prop('disabled', true).change()
+                $('#min_k').val('')
+                toggle = false;
+            }
+        }
+        function Toggle_min_c() {
+            $('#max_c').prop('disabled', true).change()
+            $('#max_c').val('')
+
+            $('#cena11').val('')
+            $('#cena22').val('')
+            $('#cena11').prop('disabled', true).change()
+            $('#cena22').prop('disabled', true).change()
+            r1 = true
+            r2 = false
+            r3 = false
+        }
+        function Toggle_max_c() {
+            $('#cena11').prop('disabled', true).change()
+            $('#cena22').prop('disabled', true).change()
+            $('#cena11').val('')
+            $('#cena22').val('')
+
+
+            $('#max_c').prop('disabled', false).change()
+            r2 = true
+            r1 = false
+            r3 = false
+        }
+        function Toggle_range_c() {
+            $('#max_c').prop('disabled', true).change()
+            $('#max_c').val('')
+
+            $('#cena11').prop('disabled', false).change()
+            $('#cena22').prop('disabled', false).change()
+            r3 = true
+            r1 = false
+            r2 = false
+        }
+        function Next() {
+            var mink = parseInt($('#min_k').val(), 10);
+            var maxk = parseInt($('#max_k').val(), 10);
+
+            var maxc = parseInt($('#max_c').val(), 10);
+            var c11 = parseInt($('#cena11').val(), 10);
+            var c22 = parseInt($('#cena22').val(), 10);
+            if (toggle == true && mink > 0 && mink < maxk && (r1 == true || (r2 == true && maxc > 0) || (r3 == true && c11 > 0 && c11 < c22)) ) {
+                $('#dalej').prop('disabled', false).change()
+            }
+            else if (toggle == false && maxk > 0 && (r1 == true || (r2 == true && maxc > 0) || (r3 == true && c11 > 0 && c11 < c22) )  ) {
+                $('#dalej').prop('disabled', false).change()
+            }
+            else {
+                $('#dalej').prop('disabled', true).change()
+            }
+        }
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        } 
+        
+        window.location = "/ui";
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+</body>
+</html>
