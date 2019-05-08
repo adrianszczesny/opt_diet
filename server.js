@@ -26,19 +26,19 @@ app.use(express.static("public"));
 
 // Inicjalizacja bazy danych 
 var connection = mysql.createConnection({
-  host: "localhost",
+    host: "jkpawlowski.nazwa.pl",
 
-  port: 3306,
+    port: 3306,
 
-  user: "root",
+    user: "jkpawlowski_jakub",
 
-  password: " ",
+    password: "mGjRD9hDT5X6GMR",
 
-  database: "opt_diet"
+    database: "jkpawlowski_dieta"
 });
 
-var userAuthRoutes = require('./routes/user.js');
-app.use('/', userAuthRoutes);
+var User = require('./routes/user.js');
+app.use('/', User);
 
 
 // miejsce na za³¹czanie api  
@@ -57,7 +57,7 @@ global.getTime = function() {
     return startTime;
 }
 
-// b³edy konsoli
+//b³edy konsoli
 global.addRouteInfo = function(req, url) {
 
 	if((typeof req.session.routerInfo != 'undefined') && (typeof url == 'undefined')) {

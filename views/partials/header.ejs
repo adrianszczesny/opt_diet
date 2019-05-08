@@ -10,25 +10,20 @@
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Zdrowie</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Przede</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Wszystkim</a>
       </li> 
 	   <!-- Uzytkownik -->
       <% if(req != null) { %>
-                  <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Dropdown link </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Link 1</a>
-        <a class="dropdown-item" href="#">Link 2</a>
-        <a class="dropdown-item" href="#">Link 3</a>
-      </div>
-    </li> 
+           <li class="nav-item">
+             <a class="nav-link" href="/uiPage"><span class="glyphicon glyphicon-log-in"></span> Moje konto</a></li>
+           <li class="nav-item">
+             <a class="nav-link" href="/logoutPage"><span class="glyphicon glyphicon-user"></span> Wyloguj</a></li>
        <% } else if(req == null) { %>
            <li class="nav-item">
              <a class="nav-link" href="/loginPage"><span class="glyphicon glyphicon-log-in"></span> Zaloguj</a></li>
