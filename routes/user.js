@@ -94,6 +94,77 @@ router.post('/logout', function(req,res) {
 	})
 });
 
+router.get('/resultPage', function (req, res) {
+    res.render('pages/dietresult', { req: req.session.ID });
+}};
+
+router.post('/result', function (req, res) {
+    dietResult(req, res, '')
+})
+
+function dietResult(req, res, url) {
+    let lak = 3, weg = 3, glu = 3;
+    if (req.body.laktoza = true) lak = 1;
+    if (req.body.wege = true) weg = 1;
+    if (req.body.gluten = true) glu = 1;
+
+    let produkty = [];
+    let cena = [];
+    let a = [];
+    let b = [];
+
+    connection.query('SELECT Ingredients.ID, Limits.Daily, Ingredients.KcalPerG, Products.Price100 FROM Limits INNER JOIN Ingredients ON Limits.IngredientID = Ingredients.ID INNER JOIN Products ON Ingredients.ID = Products.IngridientID WHERE (Ingredients.Gluten <> ? ) AND (Ingredients.Lactose <> ? ) AND (Ingredients.Vege <> ? ) ', [glu, lak, weg], function (error, results, fields) {
+        //zerowanie tablicy a
+        for (let i = 0; i < 2 + 2 * results.length; i++) {
+            for (let j = 0; j < results.length; j++) {
+                a[i][j] = 0;
+            }
+        }
+        //podstawa tablicy a
+        i = 2;
+        for (j = 0; j < results.length; j++) {
+            a[i][j] = -1;
+            i++;
+            a[i][j] = 1;
+            i++;
+        }
+
+        //wartosci kcal do tablicy a
+        for (j = 0; j < results.length; j++) {
+            a[0][j] = results[j].KcalPerG;
+        }
+        for (j = 0; j < results.length; j++) {
+            a[1][j] = -results[j].KcalPerG;
+        }
+
+        //ograniczenia diety do tablicy b
+        b[0] = body.minKcal;
+        b[1] = body.maxKcal;
+
+        //dzienne ograniczenia do tablicy b
+        j = 0;
+        for (i = 2; i < 2 + 2 * results.length; i++) {
+            b[i] = 0;
+            i++;
+            b[i] = results[j].Daily;
+            j++;
+        }
+        //wstawienie listy produktow do tablicy produkty
+        for (i = 0; i < results.length; i++) {
+            produkty[i] = results[i].ID;
+        }
+
+        //wstawienie ceny w tabele cena
+        for (i = 0; i < results.length; i++) {
+            cena[i] = -results[i].Price100;
+        }
+    })
+
+    //przeliczenie
+    let lp = numeric.solveLP(cena, a, b);
+   let solution = numeric.trunc(lp.solution, 1e-12);
+}
+
 
 function loginAuth(req, res, url) {
 
