@@ -162,7 +162,7 @@ function dietResult(req, res, url) {
 
     //przeliczenie
     let lp = numeric.solveLP(cena, a, b);
-   let solution = numeric.trunc(lp.solution, 1e-12);
+   let solution = numeric.trunc(lp.solution, 1e-4);
 }
 
 
