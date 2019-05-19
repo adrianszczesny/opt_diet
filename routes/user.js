@@ -44,6 +44,12 @@ router.get('/ui', function (req, res) {
     res.render('pages/ui', { req: req.session.ID });
 })
 
+router.get('/ui_results', function (req, res) {
+    res.render('pages/ui_results', { req: req.session.ID });
+})
+router.post('/ui_results', function (req, res) {
+    window.onload = dietResult(req, res, '');
+})
 //logowania
 router.get('/loginPage', function(req,res) {
 	res.render("pages/login", {req: req.session.ID});
@@ -93,14 +99,14 @@ router.post('/logout', function(req,res) {
 		})
 	})
 });
-
+/*
 router.get('/resultPage', function (req, res) {
     res.render('pages/dietresult', { req: req.session.ID });
-}};
+});
 
 router.post('/result', function (req, res) {
     dietResult(req, res, '')
-})
+})*/
 
 function dietResult(req, res, url) {
     let lak = 3, weg = 3, glu = 3;
@@ -162,7 +168,8 @@ function dietResult(req, res, url) {
 
     //przeliczenie
     let lp = numeric.solveLP(cena, a, b);
-   let solution = numeric.trunc(lp.solution, 1e-2);
+    let solution = numeric.trunc(lp.solution, 1e-2);
+    document.getElementById('output').innerHTML = produkty.length;
 }
 
 
@@ -220,6 +227,8 @@ function loginAuthQuery(req, res, url) {
 }
 
 module.exports = router;
+
+
 
 
 
