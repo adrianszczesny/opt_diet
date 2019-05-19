@@ -146,7 +146,9 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 0px;
     padding-bottom: 10px;
 }
-
+.ui_b {
+    background-color: cornflowerblue;
+}
 /* mobile view */
 @media (max-width:500px) {
     .navbar-nav {
