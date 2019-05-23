@@ -176,6 +176,7 @@ function dietResult(req, res, url) {
         if (solution[i] != 0) {
             tabresult[z][0] = produkty[i];
             tabresult[z][1] = solution[i] * 100;
+	    z++;
         }
     }
 
