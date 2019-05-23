@@ -111,7 +111,7 @@ router.post('/result', function (req, res) {
 function dietResult(req, res, url) {
     let lak = 3, weg = 3, glu = 3;
     if (req.body.laktoza = true) lak = 1;
-    if (req.body.wege = true) weg = 1;
+    if (req.body.wege = true) weg = 0;
     if (req.body.gluten = true) glu = 1;
 
     let produkty = [];
@@ -119,7 +119,7 @@ function dietResult(req, res, url) {
     let a = [];
     let b = [];
 
-    connection.query('SELECT Ingredients.ID, Limits.Daily, Ingredients.KcalPerG, Products.Price100 FROM Limits INNER JOIN Ingredients ON Limits.IngredientID = Ingredients.ID INNER JOIN Products ON Ingredients.ID = Products.IngridientID WHERE (Ingredients.Gluten <> ? ) AND (Ingredients.Lactose <> ? ) AND (Ingredients.Vege <> ? ) ', [glu, lak, weg], function (error, results, fields) {
+    connection.query('SELECT Ingredients.Name, Limits.Daily, Ingredients.KcalPerG, Ingredients.Price100 FROM Limits INNER JOIN Ingredients ON Limits.IngredientID = Ingredients.ID  WHERE (Ingredients.Gluten <> ? ) AND (Ingredients.Lactose <> ? ) AND (Ingredients.Vege <> ? ) ', [glu, lak, weg], function (error, results, fields) {
         //zerowanie tablicy a
         for (let i = 0; i < 2 + 2 * results.length; i++) {
             for (let j = 0; j < results.length; j++) {
@@ -157,7 +157,7 @@ function dietResult(req, res, url) {
         }
         //wstawienie listy produktow do tablicy produkty
         for (i = 0; i < results.length; i++) {
-            produkty[i] = results[i].ID;
+            produkty[i] = results[i].Name;
         }
 
         //wstawienie ceny w tabele cena
@@ -169,6 +169,16 @@ function dietResult(req, res, url) {
     //przeliczenie
     let lp = numeric.solveLP(cena, a, b);
     let solution = numeric.trunc(lp.solution, 1e-2);
+    let tabresult = [];
+    let z = 0;
+
+    for (i = 0; i < results.length; i++) {
+        if (solution[i] != 0) {
+            tabresult[z][0] = produkty[i];
+            tabresult[z][1] = solution[i] * 100;
+        }
+    }
+
     document.getElementById('output').innerHTML = produkty.length;
 }
 
