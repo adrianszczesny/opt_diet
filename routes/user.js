@@ -2,7 +2,8 @@ var mysql 		= require("mysql");
 var express 	= require('express');
 var app 		= express();
 var path 		= require("path");
-var bcrypt 		= require('bcryptjs');
+var bcrypt = require('bcryptjs');
+var numeric = require('numeric');
 var router  	= express.Router();
 
 	var bodyParser = require('body-parser');
@@ -48,7 +49,11 @@ router.get('/ui_results', function (req, res) {
     res.render('pages/ui_results', { req: req.session.ID });
 })
 router.post('/ui_results', function (req, res) {
-    window.onload = dietResult(req, res, '');
+    dietResult(req, res, '');
+})
+router.post('/ui', function (req, res) {
+    dietResult(req, res, '');
+    res.render('pages/ui_results', { req: req.session.ID });
 })
 //logowania
 router.get('/loginPage', function(req,res) {
@@ -144,8 +149,8 @@ function dietResult(req, res, url) {
         }
 
         //ograniczenia diety do tablicy b
-        b[0] = body.minKcal;
-        b[1] = body.maxKcal;
+        b[0] = body.min_k;
+        b[1] = body.max_k;
 
         //dzienne ograniczenia do tablicy b
         j = 0;
@@ -176,11 +181,17 @@ function dietResult(req, res, url) {
         if (solution[i] != 0) {
             tabresult[z][0] = produkty[i];
             tabresult[z][1] = solution[i] * 100;
-	    z++;
+            z++;
         }
     }
 
-    document.getElementById('output').innerHTML = produkty.length;
+    var str = '<ul class="list-group">'
+    tabresults.forEach(function (item) {
+        str += '<li class="list-group-item">' + item + '</li>';
+    });
+
+    str += '</ul>';
+    document.getElementById("list").innerHTML = str;
 }
 
 

@@ -11,7 +11,7 @@
         <div class="jumbotron">
 
             <h3 class="text-center">Kaloryczność</h3>
-
+			<form method="POST" action="/ui">
             <div class="row">
                 <div class="text-center col-lg-6 col-md-6 col-sm-6 col-xs-6">
                     <input type="number" min="0" class="form-control" id="min_k" name="min_k" placeholder="min" onchange="Next()" onkeypress="return isNumberKey(event)" disabled>
@@ -62,8 +62,9 @@
                     <input type="number" min="0" class="form-control" id="cena22" name="cena22" placeholder="zł" onchange="Next()" onkeypress="return isNumberKey(event)" disabled>
                 </div>
             </div>
-
+			
             <button type="submit" class="btn btn-primary btn-lg center-block" id="dalej" disabled> Dalej </button>
+			</form>
         </div>
 
 
