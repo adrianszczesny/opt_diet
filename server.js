@@ -4,6 +4,7 @@ var app 	= express();
 var path 	= require("path");
 var mysql   = require('mysql');
 var router = express.Router();
+//var numeric = require('numeric');
 
 var cookieParser = require('cookie-parser');
 

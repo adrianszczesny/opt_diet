@@ -27,6 +27,8 @@
     "express-session": "^1.15.6",
     "method-override": "^3.0.0",
     "mysql": "^2.16.0",
+    "node-matrix": "^1.0.0",
+    "numeric": "^1.2.6",
     "request": "^2.88.0"
   },
   "devDependencies": {},

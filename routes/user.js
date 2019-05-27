@@ -3,8 +3,8 @@ var express 	= require('express');
 var app 		= express();
 var path 		= require("path");
 var bcrypt = require('bcryptjs');
-var numeric = require('numeric');
-var router  	= express.Router();
+var numer = require('numeric');
+var router = express.Router();
 
 	var bodyParser = require('body-parser');
 
@@ -53,7 +53,7 @@ router.post('/ui_results', function (req, res) {
 })
 router.post('/ui', function (req, res) {
     dietResult(req, res, '');
-    res.render('pages/ui_results', { req: req.session.ID });
+   res.render('pages/ui_results', { req: req.session.ID });
 })
 //logowania
 router.get('/loginPage', function(req,res) {
@@ -114,84 +114,99 @@ router.post('/result', function (req, res) {
 })*/
 
 function dietResult(req, res, url) {
-    let lak = 3, weg = 3, glu = 3;
-    if (req.body.laktoza = true) lak = 1;
-    if (req.body.wege = true) weg = 0;
-    if (req.body.gluten = true) glu = 1;
+    let lak = 1, weg = 3, glu = 3;
+   // if (req.body.laktoza = true) lak = 1;
+    //if (req.body.wege = true) weg = 0;
+    //if (req.body.gluten = true) glu = 1;
 
-    let produkty = [];
-    let cena = [];
-    let a = [];
-    let b = [];
 
-    connection.query('SELECT Ingredients.Name, Limits.Daily, Ingredients.KcalPerG, Ingredients.Price100 FROM Limits INNER JOIN Ingredients ON Limits.IngredientID = Ingredients.ID  WHERE (Ingredients.Gluten <> ? ) AND (Ingredients.Lactose <> ? ) AND (Ingredients.Vege <> ? ) ', [glu, lak, weg], function (error, results, fields) {
-        //zerowanie tablicy a
-        for (let i = 0; i < 2 + 2 * results.length; i++) {
-            for (let j = 0; j < results.length; j++) {
+
+    connection.query('SELECT Ingredients.Name, Limits.Daily, Ingredients.Kcal, Ingredients.Price100 FROM Limits INNER JOIN Ingredients ON Limits.IngredientID = Ingredients.ID  WHERE (Ingredients.Gluten <> ? ) AND (Ingredients.Lactose <> ? ) AND (Ingredients.Vege <> ? ) ', [glu, lak, weg], function (error, results, fields) {
+       // console.log(results);
+        let produkty = [];
+        let cena = [];
+        let b = [];
+        let lengths = results.length;
+        let i = 0, j = 0;
+        let nor = 2 + 2 * lengths;
+        let a = new Array(nor);
+
+       
+        //zerowanie tablicy a       
+       for (i = 0; i < nor; i++) {
+            a[i] = new Array(lengths);
+            for (j = 0; j < lengths; j++) {
                 a[i][j] = 0;
             }
-        }
+       }
         //podstawa tablicy a
         i = 2;
-        for (j = 0; j < results.length; j++) {
+        for (j = 0; j < lengths; j++) {
             a[i][j] = -1;
             i++;
             a[i][j] = 1;
             i++;
         }
-
+        
         //wartosci kcal do tablicy a
-        for (j = 0; j < results.length; j++) {
-            a[0][j] = results[j].KcalPerG;
+        for (j = 0; j < lengths; j++) {
+            a[0][j] = results[j].Kcal;
         }
-        for (j = 0; j < results.length; j++) {
-            a[1][j] = -results[j].KcalPerG;
+        for (j = 0; j < lengths; j++) {
+            a[1][j] = -results[j].Kcal;
         }
-
+        
         //ograniczenia diety do tablicy b
-        b[0] = body.min_k;
-        b[1] = body.max_k;
-
+        let min = req.body.min_k;
+        let max = req.body.max_k;
+        b[0] = max;
+        b[1] = -min;
+        
+        
         //dzienne ograniczenia do tablicy b
         j = 0;
-        for (i = 2; i < 2 + 2 * results.length; i++) {
-            b[i] = 0;
+        for (i = 2; i < nor; i++) {
+            b.push( 0 );
             i++;
-            b[i] = results[j].Daily;
+            b.push( results[j].Daily);
             j++;
         }
+        
         //wstawienie listy produktow do tablicy produkty
-        for (i = 0; i < results.length; i++) {
-            produkty[i] = results[i].Name;
+        for (i = 0; i < lengths; i++) {
+            produkty.push(results[i].Name);
         }
-
+        
         //wstawienie ceny w tabele cena
-        for (i = 0; i < results.length; i++) {
-            cena[i] = -results[i].Price100;
+        for (i = 0; i < lengths; i++) {
+            cena.push(-results[i].Price100);
         }
-    })
-
-    //przeliczenie
-    let lp = numeric.solveLP(cena, a, b);
-    let solution = numeric.trunc(lp.solution, 1e-2);
+       
+    
+     //przeliczenie
+    let lp = numer.solveLP(cena, a, b);
+    let solutions = numer.trunc(lp.solution, 1e-12);
     let tabresult = [];
     let z = 0;
 
-    for (i = 0; i < results.length; i++) {
-        if (solution[i] != 0) {
+    for (i = 0; i < lengths; i++) {
+        if (solutions[i] > 0,05) {
+            tabresult[z] = new Array(2);
             tabresult[z][0] = produkty[i];
-            tabresult[z][1] = solution[i] * 100;
+            tabresult[z][1] = solutions[i] * 100;
             z++;
         }
-    }
-
+        }
+        console.log(tabresult);
+/*
     var str = '<ul class="list-group">'
     tabresults.forEach(function (item) {
         str += '<li class="list-group-item">' + item + '</li>';
     });
 
     str += '</ul>';
-    document.getElementById("list").innerHTML = str;
+    document.getElementById("list").innerHTML = str;*/
+    })
 }
 
 
