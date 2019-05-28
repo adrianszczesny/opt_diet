@@ -49,11 +49,10 @@ router.get('/ui_results', function (req, res) {
     res.render('pages/ui_results', { req: req.session.ID });
 })
 router.post('/ui_results', function (req, res) {
-    dietResult(req, res, '');
+    //dietResult(req, res, '');
 })
 router.post('/ui', function (req, res) {
     dietResult(req, res, '');
-   res.render('pages/ui_results', { req: req.session.ID });
 })
 //logowania
 router.get('/loginPage', function(req,res) {
@@ -193,19 +192,13 @@ function dietResult(req, res, url) {
         if (solutions[i] > 0,05) {
             tabresult[z] = new Array(2);
             tabresult[z][0] = produkty[i];
-            tabresult[z][1] = solutions[i] * 100;
+            tabresult[z][1] = Math.round(solutions[i] * 100 * 100)/ 100; // rounding to 2 decimal places
             z++;
         }
         }
-        console.log(tabresult);
-/*
-    var str = '<ul class="list-group">'
-    tabresults.forEach(function (item) {
-        str += '<li class="list-group-item">' + item + '</li>';
-    });
-
-    str += '</ul>';
-    document.getElementById("list").innerHTML = str;*/
+        //console.log(tabresult);
+        res.locals.tabresult = tabresult;
+        res.render('pages/ui_results', { req: req.session.ID, tabresult: res.locals.tabresult});
     })
 }
 
