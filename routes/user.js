@@ -113,7 +113,7 @@ router.post('/result', function (req, res) {
 })*/
 
 function dietResult(req, res, url) {
-    let lak = 1, weg = 3, glu = 3;
+    let lak = 3, weg = 3, glu = 3;
    // if (req.body.laktoza = true) lak = 1;
     //if (req.body.wege = true) weg = 0;
     //if (req.body.gluten = true) glu = 1;
