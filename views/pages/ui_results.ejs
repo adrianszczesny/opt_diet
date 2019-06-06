@@ -11,12 +11,13 @@
         <div class="jumbotron">
 
             <h3 class="text-center">Wyznaczona dieta:</h3>
-			
+		<div class="container scroll">	
 		<ul class="list-group">
 		<% for(var i = 0; i < tabresult.length; i++) { %>
 		<li class="list-group-item"><%= tabresult[i][0] %><span class="badge ui_b"><%= tabresult[i][1] %><span></li>
 		<% }; %>
 		</ul>
+		</div>
      <!--************************************************************************************************************-->
 
 
