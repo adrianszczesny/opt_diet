@@ -194,16 +194,18 @@ function dietResult(req, res, url) {
     let solutions = numer.trunc(lp.solution, 1e-12);
     let tabresult = [];
     let z = 0;
+        let cenakoncowa = 0;
 
     for (i = 0; i < lengths; i++) {
         if (solutions[i] > 0,05) {
             tabresult[z] = new Array(2);
             tabresult[z][0] = produkty[i];
+            cenakoncowa = cenakoncowa + solutions[i] * results[i].Price100;
             tabresult[z][1] = Math.round(solutions[i] * 100 * 100)/ 100; // rounding to 2 decimal places
             z++;
         }
         }
-        //console.log(tabresult);
+        console.log(cenakoncowa);
         res.locals.tabresult = tabresult;
         res.render('pages/ui_results', { req: req.session.ID, tabresult: res.locals.tabresult});
     })
