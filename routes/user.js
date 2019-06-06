@@ -157,8 +157,14 @@ function dietResult(req, res, url) {
         }
         
         //ograniczenia diety do tablicy b
-        let min = req.body.min_k;
         let max = req.body.max_k;
+        let min;
+        if (req.body.min_k == null) {
+            min = max - 500;
+        }
+        else {
+            min = req.body.min_k;
+        }
         b[0] = max;
         b[1] = -min;
         
