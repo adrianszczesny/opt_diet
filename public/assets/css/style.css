@@ -149,6 +149,10 @@ h1, h2, h3, h4, h5, h6 {
 .ui_b {
     background-color: cornflowerblue;
 }
+.scroll {
+    height: 370px;
+    overflow-y: scroll;
+}
 /* mobile view */
 @media (max-width:500px) {
     .navbar-nav {
