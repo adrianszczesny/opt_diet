@@ -26,3 +26,9 @@ Aplikacja ma na celu wybór dla użytkownika wystarczającej liczby produktów p
     <dd> - Wczytanie danych do programu (struktury danych) </dd>
     <dd> - Interfejs użytkownika </dd>
  </dl>    
+## Technologie:
+<dl>
+  <dd> Back-end: Node.js - Express.js </dd>
+  <dd> Front-end: Bootstrap 4 </dd>
+  <dd> Baza danych: MySQL </dd>
+</dl>
