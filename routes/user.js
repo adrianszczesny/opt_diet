@@ -26,11 +26,11 @@ var connection = mysql.createConnection({
 
     port: 3306,
 
-    user: "jkpawlowski_jakub",
+    user: USER,
 
-    password: "mGjRD9hDT5X6GMR",
+    password: PASS,
 
-    database: "jkpawlowski_dieta"
+    database: DB
 });
 router.use(express.static("../public"));
 
