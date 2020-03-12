@@ -1,4 +1,4 @@
-// za³¹czenie paczek
+// zaÂ³Â¹czenie paczek
 var express = require('express');
 var app 	= express();
 var path 	= require("path");
@@ -31,18 +31,18 @@ var connection = mysql.createConnection({
 
     port: 3306,
 
-    user: "jkpawlowski_jakub",
+    user: USER,
 
-    password: "mGjRD9hDT5X6GMR",
+    password: PASS,
 
-    database: "jkpawlowski_dieta"
+    database: DB
 });
 
 var User = require('./routes/user.js');
 app.use('/', User);
 
 
-// miejsce na za³¹czanie api  
+// miejsce na zaÂ³Â¹czanie api  
 
 
 // licznik 
@@ -58,7 +58,7 @@ global.getTime = function() {
     return startTime;
 }
 
-//b³edy konsoli
+//bÂ³edy konsoli
 global.addRouteInfo = function(req, url) {
 
 	if((typeof req.session.routerInfo != 'undefined') && (typeof url == 'undefined')) {
@@ -70,7 +70,7 @@ global.addRouteInfo = function(req, url) {
 	} else return false;
 }
 
-// wys³anie na port 3000
+// wysÂ³anie na port 3000
 app.listen(3000, function(){
 	console.log('listening on 3000');
 });
